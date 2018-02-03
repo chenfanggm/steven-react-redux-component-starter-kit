@@ -2,7 +2,7 @@
   "presets": [
     "babel-preset-react",
     ["babel-preset-env", {
-      "modules": "commonjs",
+      "modules": false,
       "targets": {
         "browsers": "last 2 versions",
         "node": "current",
@@ -11,14 +11,11 @@
     }]
   ],
   "plugins": [
-    ["lodash", { "id": ["lodash", "semantic-ui-react"] }],
-    //"babel-plugin-syntax-dynamic-import",
+    "react-hot-loader/babel",
+    ["lodash", { "id": ["lodash"] }],
+    "babel-plugin-syntax-dynamic-import",
     "babel-plugin-transform-class-properties",
-    ["babel-plugin-transform-runtime", {
-      "polyfill": false // only polyfill needed features in client/normalize.js
-    }],
-    ["babel-plugin-transform-object-rest-spread", {
-      "useBuiltIns": true // polyfill Object.assign in client/normalize.js
-    }]
+    ["babel-plugin-transform-runtime"],
+    ["babel-plugin-transform-object-rest-spread"]
   ]
 }

@@ -1,4 +1,4 @@
-const PREFIX = '/api/v1'
+const PREFIX = '/api/v1';
 
 const API = {
   // USER
@@ -9,6 +9,6 @@ const API = {
   USER_LOGOUT: PREFIX + '/user/logout',
   USER_UPDATE_USERNAME: PREFIX + '/user/username',
   USER_UPDATE_LAST_READ_MESSAGE_AT: PREFIX + '/user/lastReadMessageAt'
-}
+};
 
-export default API
+export default API;

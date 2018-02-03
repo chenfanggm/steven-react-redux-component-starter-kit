@@ -1,7 +1,7 @@
-import React from 'react'
-import Branding from '../Branding'
-import MainMenu from '../../containers/MainMenu'
-import classes from './Navbar.scss'
+import React from 'react';
+import Branding from '../Branding';
+import MainMenu from '../../containers/MainMenu';
+import classes from './Navbar.scss';
 
 
 const Navbar = () => (
@@ -9,6 +9,6 @@ const Navbar = () => (
     <Branding title='Chen' />
     <MainMenu />
   </header>
-)
+);
 
-export default Navbar
+export default Navbar;

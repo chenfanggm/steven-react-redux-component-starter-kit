@@ -1,35 +1,35 @@
-import '../../styles/main.scss'
-import React from 'react'
-import { connect } from 'react-redux'
-import { reportPageView } from '../../utils/analytics'
-import classes from './OneColumnLayout.scss'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
-import { actions as authActions } from '../../redux/modules/userReducer'
+import '../../styles/main.scss';
+import React from 'react';
+import { connect } from 'react-redux';
+import { reportPageView } from '../../utils/analytics';
+import classes from './OneColumnLayout.scss';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { actions as authActions } from '../../redux/reducers/userReducer';
 
 
 class OneColumnLayout extends React.Component {
 
   componentWillMount() {
-    reportPageView()
+    reportPageView();
   }
 
   componentWillUpdate() {
-    reportPageView()
+    reportPageView();
   }
 
   componentDidMount() {
     // stop bg scrolling on mobile when modal is opened
     document.getElementsByTagName('body')[0].addEventListener('touchmove', (e) => {
       if (document.getElementsByClassName('.noScroll')[0].has(document.getElementsByClassName(e.target)).length)
-        e.preventDefault()
-    })
+        e.preventDefault();
+    });
     // check login status
-    this.props.isLoggedIn()
+    this.props.isLoggedIn();
   }
 
   render() {
-    const { children } = this.props
+    const { children } = this.props;
 
     return (
       <div className={classes.container}>
@@ -45,17 +45,16 @@ class OneColumnLayout extends React.Component {
         <div className={classes.hiddenLayer}>
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => {
-  const isLoading = (state.post && state.post.isLoading) || false
-
+  const isLoading = (state.post && state.post.isLoading) || false;
   return {
-    isLoading: isLoading
-  }
-}
+    isLoading
+  };
+};
 
-export default connect(mapStateToProps, authActions)(OneColumnLayout)
+export default connect(mapStateToProps, authActions)(OneColumnLayout);
 

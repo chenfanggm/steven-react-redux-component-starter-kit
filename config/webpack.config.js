@@ -1,22 +1,22 @@
-const argv = require('yargs').argv
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const debug = require('debug')('app:config:webpack')
-const config = require('../config')
+const argv = require('yargs').argv;
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const debug = require('debug')('app:config:webpack');
+const config = require('../config');
 
-const paths = config.pathUtil
-const __DEV__ = config.compilerGlobals.__DEV__
-const __PROD__ = config.compilerGlobals.__PROD__
-const __TEST__ = config.compilerGlobals.__TEST__
+const paths = config.pathUtil;
+const __DEV__ = config.compilerGlobals.__DEV__;
+const __PROD__ = config.compilerGlobals.__PROD__;
+const __TEST__ = config.compilerGlobals.__TEST__;
 
-debug('Init webpack config.')
-const mainEntry = []
+debug('Init webpack config.');
+const mainEntry = [];
 if (__DEV__) {
-  mainEntry.push('react-hot-loader/patch')
-  mainEntry.push(`webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr&reload=true`)
+  mainEntry.push('react-hot-loader/patch');
+  mainEntry.push(`webpack-hot-middleware/client.js?path=${config.compilerPublicPath}__webpack_hmr&reload=true`);
 }
-mainEntry.push(paths.client('main'))
+mainEntry.push(paths.client('main'));
 const webpackConfig = {
   devtool: config.compilerSourceMap,
   entry: {
@@ -46,7 +46,7 @@ const webpackConfig = {
     new webpack.DefinePlugin(config.compilerGlobals),
     // new webpack.ProvidePlugin({})
   ]
-}
+};
 
 // ------------------------------------
 // Module Rules
@@ -65,24 +65,21 @@ webpackConfig.module.rules.push({
           modules: false,
           targets: {
             browsers: 'last 2 versions',
-            uglify: true
+            uglify: __PROD__
           }
         }]
       ],
       plugins: [
+        'react-hot-loader/babel',
         ['lodash', { 'id': ['lodash', 'semantic-ui-react'] }],
-        //'babel-plugin-syntax-dynamic-import',
+        'babel-plugin-syntax-dynamic-import',
         'babel-plugin-transform-class-properties',
-        ['babel-plugin-transform-runtime', {
-          polyfill: false // only polyfill needed features in client/normalize.js
-        }],
-        ['babel-plugin-transform-object-rest-spread', {
-          useBuiltIns: true // polyfill Object.assign in client/normalize.js
-        }]
+        ['babel-plugin-transform-runtime'],
+        ['babel-plugin-transform-object-rest-spread']
       ]
     }
   }]
-})
+});
 
 // Images
 webpackConfig.module.rules.push({
@@ -100,8 +97,8 @@ webpackConfig.module.rules.push({
   ['eot', 'application/vnd.ms-fontobject'],
   ['svg', 'image/svg+xml'],
 ].forEach((font) => {
-  const extension = font[0]
-  const mimetype = font[1]
+  const extension = font[0];
+  const mimetype = font[1];
 
   webpackConfig.module.rules.push({
     test    : new RegExp(`\\.${extension}$`),
@@ -111,8 +108,8 @@ webpackConfig.module.rules.push({
       limit : 10000,
       mimetype,
     },
-  })
-})
+  });
+});
 
 // Styles
 const cssLoader = {
@@ -134,7 +131,7 @@ const cssLoader = {
       }]
     }
   }
-}
+};
 
 const sassLoader = {
   loader: 'sass-loader',
@@ -144,13 +141,13 @@ const sassLoader = {
       paths.client('styles'),
     ]
   }
-}
+};
 
 const extractStyles = new ExtractTextPlugin({
   filename: '[name].[contenthash].css',
   allChunks: true,
   disable: __DEV__
-})
+});
 
 webpackConfig.module.rules.push({
   test: /\.(sass|scss)$/,
@@ -161,7 +158,7 @@ webpackConfig.module.rules.push({
       sassLoader
     ]
   })
-})
+});
 
 webpackConfig.module.rules.push({
   test: /\.css$/,
@@ -169,9 +166,9 @@ webpackConfig.module.rules.push({
     fallback: 'style-loader',
     use: [cssLoader]
   })
-})
+});
 
-webpackConfig.plugins.push(extractStyles)
+webpackConfig.plugins.push(extractStyles);
 
 // HTML Template
 webpackConfig.plugins.push(new HtmlWebpackPlugin({
@@ -182,20 +179,20 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
   minify: {
     collapseWhitespace: true
   }
-}))
+}));
 
 // Development Tools
 if (__DEV__) {
-  debug('Enable plugins for live development (HMR, NamedModulesPlugin).')
+  debug('Enable plugins for live development (HMR, NamedModulesPlugin).');
   webpackConfig.plugins.push(
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-  )
+  );
 }
 
 // Production Optimizations
 if (__PROD__) {
-  debug('Enable plugins for production optimization.')
+  debug('Enable plugins for production optimization.');
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -218,31 +215,31 @@ if (__PROD__) {
         join_vars: true,
       }
     })
-  )
+  );
 }
 
 // Bundle Splitting
 if (!__TEST__) {
-  debug('Enable plugins for bundle split.')
+  debug('Enable plugins for bundle split.');
   webpackConfig.plugins.push(
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'normalize']
     })
-  )
+  );
 }
 
 /* Ensure that the compiler exits on errors during testing so that
 they do not get skipped and misreported.*/
 if (__TEST__ && !argv.watch) {
-  webpackConfig.plugins.push(function () {
-    this.plugin('done', function (stats) {
+  webpackConfig.plugins.push(() => {
+    this.plugin('done', (stats) => {
       if (stats.compilation.errors.length) {
         throw new Error(
           stats.compilation.errors.map(err => err.message || err)
-        )
+        );
       }
-    })
-  })
+    });
+  });
 }
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

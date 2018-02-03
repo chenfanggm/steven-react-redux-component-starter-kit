@@ -1,5 +1,5 @@
-import React from 'react'
-import classes from './Footer.scss'
+import React from 'react';
+import classes from './Footer.scss';
 
 const Footer = () => (
   <footer className={classes.container}>
@@ -13,6 +13,6 @@ const Footer = () => (
       </a>
     </div>
   </footer>
-)
+);
 
-export default Footer
+export default Footer;

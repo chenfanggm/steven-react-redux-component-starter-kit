@@ -1,2 +1,2 @@
-import OneColumnLayout from './OneColumnLayout'
-export default OneColumnLayout
+import OneColumnLayout from './OneColumnLayout';
+export default OneColumnLayout;

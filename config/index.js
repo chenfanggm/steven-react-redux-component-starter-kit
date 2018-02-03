@@ -1,7 +1,8 @@
-const path = require('path')
-const debug = require('debug')('app:config')
+const path = require('path');
+const debug = require('debug')('app:config');
 
-debug('Init default application config.')
+
+debug('Init default application config.');
 // --------------------------------------
 // Default Configuration
 // --------------------------------------
@@ -62,7 +63,7 @@ const config = {
     { type : 'text-summary' },
     { type : 'html', dir : 'coverage' }
   ]
-}
+};
 
 // NOTE: application global variables must also be added to .eslintrc
 config.compilerGlobals = {
@@ -72,33 +73,33 @@ config.compilerGlobals = {
   __DEV__: config.env === 'development',
   __PROD__: config.env === 'production',
   __TEST__: config.env === 'test'
-}
+};
 
 // ------------------------------------
 // Environment Overrides
 // ------------------------------------
-debug(`Looking up environment overrides for NODE_ENV "${config.env}".`)
-const environments = require('./environments')
-const overrides = environments[config.env]
+debug(`Looking up environment overrides for NODE_ENV "${config.env}".`);
+const environments = require('./environments');
+const overrides = environments[config.env];
 if (overrides) {
-  debug(`Found overrides, applying overrides for NODE_ENV ${config.env}`)
-  Object.assign(config, overrides(config))
+  debug(`Found overrides, applying overrides for NODE_ENV ${config.env}`);
+  Object.assign(config, overrides(config));
 } else {
-  debug('No environment overrides found, default config will be used.')
+  debug('No environment overrides found, default config will be used.');
 }
 
 // ------------------------------------
 // Project Path Utilities
 // ------------------------------------
 function base() {
-  const args = [config.baseDir].concat([].slice.call(arguments))
-  return path.resolve.apply(null, args)
+  const args = [config.baseDir].concat([].slice.call(arguments));
+  return path.resolve.apply(null, args);
 }
 
 config.pathUtil = {
   base: base,
   client: base.bind(null, config.clientDir),
   dist: base.bind(null, config.distDir)
-}
+};
 
-module.exports = config
+module.exports = config;
