@@ -71,7 +71,7 @@ webpackConfig.module.rules.push({
       ],
       plugins: [
         'react-hot-loader/babel',
-        ['lodash', { 'id': ['lodash', 'semantic-ui-react'] }],
+        ['lodash', { 'id': ['lodash'] }],
         'babel-plugin-syntax-dynamic-import',
         'babel-plugin-transform-class-properties',
         ['babel-plugin-transform-runtime'],
