@@ -3,7 +3,7 @@ import classes from './AboutPage.scss';
 import Showdown from 'showdown';
 import AsyncComponent from '../../containers/commons/AsyncComponent';
 import { getStore } from '../../redux/store';
-import * as plugins from '../../plugins';
+import { createModuleLoader } from '../../plugins';
 
 
 const converter = new Showdown.Converter();
@@ -25,24 +25,13 @@ class AboutView extends React.Component {
     };
   }
 
-  componentWillMount() {
+  render() {
     const { pluginId } = this.state;
     const store = getStore();
-    if (pluginId) {
-      if (plugins[pluginId]) {
-        this.setState({
-          pluginLoader: plugins[pluginId](store)
-        });
-      }
-    }
-  }
-
-  render() {
-    const { pluginLoader } = this.state;
 
     return (
       <article className={classes.container}>
-        {pluginLoader && <AsyncComponent moduleLoader={pluginLoader} />}
+        {pluginId && <AsyncComponent moduleLoader={createModuleLoader(store, pluginId)} />}
         <main>
           <section>
             <h3 className={classes.title}>Me</h3>

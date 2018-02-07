@@ -4,7 +4,7 @@ import OneColumnLayout from '../containers/OneColumnLayout';
 import AboutPage from './AboutPage';
 import AsyncComponent from '../containers/commons/AsyncComponent';
 import { getStore } from '../redux/store';
-import { controlPanel } from '../plugins';
+import { createModuleLoader } from '../plugins';
 
 
 export const createRoutes = () => {
@@ -14,7 +14,7 @@ export const createRoutes = () => {
     <OneColumnLayout>
       <Switch>
         <Route exact path='/about' component={AboutPage} />
-        <Route exact path='/control-panel' component={() => <AsyncComponent moduleLoader={controlPanel(store)} />} />
+        <Route exact path='/control-panel' component={() => <AsyncComponent moduleLoader={createModuleLoader(store, 'controlPanel')} />} />
         <Redirect path='*' to='/' />
       </Switch>
     </OneColumnLayout>

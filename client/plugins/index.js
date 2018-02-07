@@ -4,9 +4,9 @@ import jsonp from 'jsonp';
 
 // plugins
 //export const controlPanel = (store) => () => injectComponent(store, 'controlPanel', import(/* webpackChunkName: "ControlPanel" */ './ControlPanel'));
-export const controlPanel = (store) => () => loadComponent(store, 'controlPanel');
+//export const controlPanel = (store) => () => loadComponent(store, 'controlPanel');
 
-const loadComponent = (store, id) => {
+export const createModuleLoader = (store, id) => () => {
   const module = store.getLoadedAsyncModule(id);
   if (module) return Promise.resolve(module);
 
