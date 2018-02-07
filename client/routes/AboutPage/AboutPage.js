@@ -1,6 +1,9 @@
 import React from 'react';
 import classes from './AboutPage.scss';
 import Showdown from 'showdown';
+import AsyncComponent from '../../containers/commons/AsyncComponent';
+import { getStore } from '../../redux/store';
+import * as plugins from '../../plugins';
 
 
 const converter = new Showdown.Converter();
@@ -12,27 +15,39 @@ const whoAmI =
   are looking for an answer to their life that they shouldn't be answered by
   themselves by suffering through all the unnecessary pains.`;
 
-const whatAboutTheSite =
-  `This site is about sharing my continuously growing **awareness of being**
-  alive. It also shares some **technologies** that I learned from any honorable
-  resources to help new developers catch up a little bit easier. I wish to
-  learn new things from your friendly and honest comments and emails. Thank you!`;
-
 class AboutView extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pluginId: 'controlPanel'
+    };
+  }
+
+  componentWillMount() {
+    const { pluginId } = this.state;
+    const store = getStore();
+    if (pluginId) {
+      if (plugins[pluginId]) {
+        this.setState({
+          pluginLoader: plugins[pluginId](store)
+        });
+      }
+    }
+  }
+
   render() {
+    const { pluginLoader } = this.state;
+
     return (
       <article className={classes.container}>
+        {pluginLoader && <AsyncComponent moduleLoader={pluginLoader} />}
         <main>
           <section>
             <h3 className={classes.title}>Me</h3>
             <p className={classes.main}
                dangerouslySetInnerHTML={{ __html: converter.makeHtml(whoAmI) }}>
-            </p>
-          </section>
-          <section>
-            <h3 className={classes.title}>The Site</h3>
-            <p className={classes.main}
-               dangerouslySetInnerHTML={{ __html: converter.makeHtml(whatAboutTheSite) }}>
             </p>
           </section>
         </main>

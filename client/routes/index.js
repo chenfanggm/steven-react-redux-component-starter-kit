@@ -4,18 +4,17 @@ import OneColumnLayout from '../containers/OneColumnLayout';
 import AboutPage from './AboutPage';
 import AsyncComponent from '../containers/commons/AsyncComponent';
 import { getStore } from '../redux/store';
-import { injectComponent } from '../utils';
+import { controlPanel } from '../plugins';
 
 
 export const createRoutes = () => {
   const store = getStore();
-  const controlPanelLoader = () => injectComponent(store, 'controlPanel', import(/* webpackChunkName: "ControlPanel" */ '../plugins/ControlPanel'));
 
   return (
     <OneColumnLayout>
       <Switch>
-        <Route exact path='/' component={AboutPage} />
-        <Route exact path='/control-panel' component={() => <AsyncComponent moduleLoader={controlPanelLoader} />} />
+        <Route exact path='/about' component={AboutPage} />
+        <Route exact path='/control-panel' component={() => <AsyncComponent moduleLoader={controlPanel(store)} />} />
         <Redirect path='*' to='/' />
       </Switch>
     </OneColumnLayout>

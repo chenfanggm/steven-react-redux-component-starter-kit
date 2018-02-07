@@ -1,20 +1,6 @@
 import React from 'react';
 
 
-/*************
- * Framework
- *************/
-export const registerComponent = (component) => {
-  const { Component, id, reducers } = component;
-  if (Component) {
-    // register reducer
-    if (id && reducers) {
-      registerReducer(id, reducers);
-    }
-    return Component;
-  }
-};
-
 export const injectComponent = (store, id, moduleProvider) => {
   const module = store.getLoadedAsyncModule(id);
   if (module) return Promise.resolve(module);
@@ -33,9 +19,6 @@ export const injectComponent = (store, id, moduleProvider) => {
   });
 };
 
-/*************
- * Request
- *************/
 export const errorFilter = ({ withJsonFilter } = { withJsonFilter: true }) =>
   (response) => {
     if (!response.ok) {
@@ -61,9 +44,6 @@ export const getQueryString = (queryParams) => {
   return searchString;
 };
 
-/*************
- * Validation
- *************/
 export const isValidEmail = (email) => {
   const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   return regex.test(email);
