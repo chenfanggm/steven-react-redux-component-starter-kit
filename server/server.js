@@ -35,6 +35,8 @@ if (config.env === 'development') {
     path: '/__webpack_hmr'
   }));
 
+  app.use(express.static(path.resolve(config.baseDir, config.distDir)));
+
   app.use(express.static(path.resolve(config.baseDir, config.staticDir)));
 
   // fallback all routes to index.html
@@ -52,6 +54,9 @@ if (config.env === 'development') {
 
   debug('Server is running on DEVELOPMENT mode.');
 } else {
+  app.use(express.static(path.resolve(config.baseDir, config.distDir, './plugins'), {
+    maxage: config.cache_control.max_age
+  }));
   app.use(express.static(path.resolve(config.baseDir, config.distDir), {
     maxage: config.cache_control.max_age
   }));

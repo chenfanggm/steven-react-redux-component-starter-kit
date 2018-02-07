@@ -21,7 +21,7 @@ module.exports = {
   // Overrides when NODE_ENV === 'production'
   // --------------------------------------
   production: (config) => ({
-    serverHost : 'your_host_domain.com',
+    serverHost : 'localhost',
     compilerPublicPath: '/',
     compilerFailOnWarning: false,
     compilerHashType: 'chunkhash',

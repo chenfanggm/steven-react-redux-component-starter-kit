@@ -12,7 +12,8 @@ class AsyncComponent extends PureComponent {
   componentWillMount() {
     if (!this.state.Component) {
       this.props.moduleLoader().then(({ Component }) => {
-        this.setState({ Component });
+        if (Component)
+          this.setState({ Component });
       });
     }
   }
