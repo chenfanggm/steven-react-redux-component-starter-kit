@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './AboutPage.scss';
+import classes from './PluginPage.scss';
 import Showdown from 'showdown';
 
 
@@ -18,7 +18,7 @@ const whatAboutTheSite =
   resources to help new developers catch up a little bit easier. I wish to
   learn new things from your friendly and honest comments and emails. Thank you!`;
 
-class AboutView extends React.Component {
+class PluginPage extends React.Component {
   render() {
     return (
       <article className={classes.container}>
@@ -41,4 +41,4 @@ class AboutView extends React.Component {
   }
 }
 
-export default AboutView;
+export default PluginPage;

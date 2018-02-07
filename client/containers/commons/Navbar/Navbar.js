@@ -1,6 +1,6 @@
 import React from 'react';
 import Branding from '../Branding';
-import MainMenu from '../../containers/MainMenu';
+import MainMenu from '../../MainMenu/index';
 import classes from './Navbar.scss';
 
 

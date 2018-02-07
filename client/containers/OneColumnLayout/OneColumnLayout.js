@@ -1,10 +1,11 @@
 import '../../styles/main.scss';
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { reportPageView } from '../../utils/analytics';
 import classes from './OneColumnLayout.scss';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import Navbar from '../commons/Navbar';
+import Footer from '../commons/Footer';
 import { actions as authActions } from '../../redux/reducers/userReducer';
 
 
@@ -56,5 +57,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, authActions)(OneColumnLayout);
+export default withRouter(connect(mapStateToProps, authActions)(OneColumnLayout));
 

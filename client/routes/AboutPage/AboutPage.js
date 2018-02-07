@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './AboutPage.scss';
 import Showdown from 'showdown';
-import ControlPanel from '../../containers/ControlPanel';
 
 
 const converter = new Showdown.Converter();
@@ -23,7 +22,6 @@ class AboutView extends React.Component {
   render() {
     return (
       <article className={classes.container}>
-        <ControlPanel />s
         <main>
           <section>
             <h3 className={classes.title}>Me</h3>

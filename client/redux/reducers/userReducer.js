@@ -1,5 +1,5 @@
 import { routerActions } from 'react-router-redux';
-import { errorFilter } from '../../utils/common';
+import { errorFilter } from '../../utils/index';
 import API from '../../utils/apiConstants';
 
 

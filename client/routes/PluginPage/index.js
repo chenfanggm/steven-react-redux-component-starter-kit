@@ -1,2 +1,2 @@
-import AboutPage from './AboutPage';
-export default AboutPage;
+import PluginPage from './PluginPage';
+export default PluginPage;

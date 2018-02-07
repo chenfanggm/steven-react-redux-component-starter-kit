@@ -24,8 +24,11 @@ export const createStore = (initialState = {}, history) => {
       applyMiddleware(...middleware),
     )
   );
+  store.asyncModules = {};
   store.asyncReducers = {};
   store.injectReducer = injectReducer;
+  store.registerAsyncModule = registerAsyncModule;
+  store.getLoadedAsyncModule = getLoadedAsyncModule;
 
   if (module.hot) {
     module.hot.accept('./store', () => {
@@ -38,6 +41,15 @@ export const createStore = (initialState = {}, history) => {
 
 export const getStore = () => {
   return store;
+};
+
+export const registerAsyncModule = (id, module) => {
+  if (store.asyncModules[id]) console.error(`Fail to register an already existed module ${id}`);
+  store.asyncModules[id] = module;
+};
+
+export const getLoadedAsyncModule = (id) => {
+  return store.asyncModules[id];
 };
 
 const makeRootReducer = (asyncReducers) =>

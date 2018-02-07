@@ -27,6 +27,7 @@ const webpackConfig = {
   output: {
     path: paths.dist(),
     filename: __DEV__ ? '[name].bundle.js' : `[name].[${config.compilerHashType}].bundle.js`,
+    chunkFilename: '[name].chunk.js',
     publicPath: config.compilerPublicPath
   },
   resolve: {

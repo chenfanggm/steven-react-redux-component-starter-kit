@@ -5,7 +5,7 @@ import { createStore } from './redux/store';
 import createHistory from 'history/createBrowserHistory';
 import { createRoutes } from './routes';
 import { AppContainer } from 'react-hot-loader';
-import App from './containers/App';
+import App from './App';
 
 
 // --------------------------------------

@@ -1,5 +1,4 @@
 import React from 'react';
-import { getStore, registerReducer } from '../redux/store';
 
 
 /*************
@@ -16,27 +15,23 @@ export const registerComponent = (component) => {
   }
 };
 
-export const injectComponent = (component) => {
-  const { Component, id, reducers } = component;
-  const store = getStore();
-  console.log('inject', Component, id, reducers);
-  if (store && Component) {
-    // inject reducer
-    if (id && reducers) {
-      store.injectReducer(id, reducers);
-    }
+export const injectComponent = (store, id, moduleProvider) => {
+  const module = store.getLoadedAsyncModule(id);
+  if (module) return Promise.resolve(module);
 
-    return class extends React.Component {
-      render() {
-        const { children } = this.props;
-        return (
-          <Component children={children} />
-        );
+  return moduleProvider.then((module) => {
+    if (module && module.default) {
+      store.registerAsyncModule(id, module.default);
+      const { reducers } = module.default;
+      if (reducers) {
+        store.injectReducer(id, reducers);
       }
-    };
-  }
+      return module.default;
+    } else {
+      return (<div>Get empty async module</div>);
+    }
+  });
 };
-
 
 /*************
  * Request
